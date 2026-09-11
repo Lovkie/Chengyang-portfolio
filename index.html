@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>张诚扬 · 影音交互设计作品集</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://aka.doubaocdn.com/s/9fbNBv3At2">
+<link rel="icon" type="image/png" sizes="192x192" href="https://aka.doubaocdn.com/s/9fbNBv3At2">
+<link rel="apple-touch-icon" href="https://aka.doubaocdn.com/s/MlPjRuNz8N">
+<meta name="description" content="张诚扬 ZHANG CHENGYANG — 影音交互设计 / 交互影像体验 2026。数字烟花交互影像、VR 叙事游戏、交互灯光装置、腾讯游戏金铲铲项目交互设计。">
+<link rel="preconnect" href="https://miaoda.feishu.cn">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap">
+<style>
+/* ============ 设计 Token ============ */
+:root{
+  --bg:#0a0e0d;
+  --bg-2:#0e1412;
+  --bg-3:#131b18;
+  --ink:#eef2ec;
+  --ink-dim:#9fb3aa;
+  --ink-faint:#5f7269;
+  --green:#3df0c6;
+  --green-deep:#1d9c7f;
+  --green-glow:rgba(61,240,198,.45);
+  --red:#e05b5b;
+  --gold:#e8c468;
+  --line:rgba(140,170,158,.16);
+  --serif:"Noto Serif SC","Songti SC","SimSun",serif;
+  --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --mono:"Space Grotesk","Noto Sans SC",monospace;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-weight:300;
+  line-height:1.75;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--green);color:#071009}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+/* 滚动条 */
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:#1e2b26;border-radius:5px}
+::-webkit-scrollbar-thumb:hover{background:#2b3d36}
+
+/* ============ 布局基元 ============ */
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+.section{padding:110px 0;position:relative}
+.eyebrow{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.35em;
+  text-transform:uppercase;
+  color:var(--green);
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:22px;
+}
+.eyebrow::before{content:"";width:34px;height:1px;background:var(--green);display:inline-block}
+h2.title{
+  font-family:var(--serif);
+  font-weight:900;
+  font-size:clamp(30px,5vw,52px);
+  line-height:1.15;
+  letter-spacing:.02em;
+  margin-bottom:20px;
+}
+.title em{font-style:normal;color:var(--green)}
+.lead{color:var(--ink-dim);max-width:640px;font-size:16px}
+.lead b{color:var(--ink);font-weight:500}
+
+/* ============ 滚动进度条 & 导航 ============ */
+#progress{
+  position:fixed;top:0;left:0;height:2px;width:0;
+  background:linear-gradient(90deg,var(--green),var(--gold));
+  z-index:1000;
+}
+#topnav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  padding:22px 0;
+  transition:background .4s var(--ease),padding .4s var(--ease),backdrop-filter .4s;
+}
+#topnav.scrolled{
+  background:rgba(8,12,11,.82);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  padding:12px 0;
+  border-bottom:1px solid var(--line);
+}
+#topnav .wrap{display:flex;align-items:center;justify-content:space-between}
+.brand{font-family:var(--mono);font-weight:700;letter-spacing:.18em;font-size:15px;color:var(--ink)}
+.brand b{color:var(--green);font-weight:700}
+.brand em{font-style:normal;color:transparent;-webkit-text-stroke:1px var(--green)}
+#topnav ul{display:flex;gap:6px;list-style:none}
+#topnav ul a{
+  font-size:13px;letter-spacing:.12em;color:var(--ink-dim);
+  padding:8px 14px;border-radius:999px;transition:color .3s,background .3s;
+}
+#topnav ul a:hover,#topnav ul a.active{color:var(--green);background:rgba(61,240,198,.08)}
+.menu-btn{display:none;background:none;border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:8px 12px;font-size:13px;cursor:pointer;letter-spacing:.15em}
+
+/* ============ Hero ============ */
+#hero{
+  min-height:100vh;
+  position:relative;
+  display:flex;align-items:center;
+  overflow:hidden;
+}
+#hero canvas#fx{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+.hero-veil{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:
+    radial-gradient(1200px 600px at 20% 0%,rgba(61,240,198,.10),transparent 60%),
+    radial-gradient(900px 500px at 85% 90%,rgba(232,196,104,.07),transparent 60%),
+    linear-gradient(180deg,rgba(10,14,13,.55),rgba(10,14,13,.88) 82%,var(--bg));
+}
+.hero-inner{position:relative;z-index:3;width:100%}
+.hero-kicker{
+  font-family:var(--mono);font-size:13px;letter-spacing:.45em;
+  color:var(--green);margin-bottom:28px;text-transform:uppercase;
+  display:flex;align-items:center;gap:18px;
+}
+.hero-kicker::before{content:"";width:52px;height:1px;background:var(--green)}
+.hero-name{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(52px,9.5vw,128px);
+  line-height:1.02;letter-spacing:.01em;
+}
+.hero-name .zh{display:block;color:var(--ink)}
+.hero-name .en{
+  display:block;font-family:var(--mono);
+  font-size:clamp(24px,3.6vw,46px);font-weight:500;
+  color:transparent;-webkit-text-stroke:1px var(--green);
+  letter-spacing:.06em;margin-top:14px;
+}
+.hero-sub{
+  margin-top:34px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;
+}
+.hero-tag{
+  font-size:14px;letter-spacing:.16em;color:var(--ink);
+  border:1px solid var(--line);border-radius:999px;padding:10px 22px;
+  background:rgba(255,255,255,.02);
+}
+.hero-tag b{color:var(--green);font-weight:500}
+.hero-desc{margin-top:30px;max-width:560px;color:var(--ink-dim);font-size:16px}
+.hero-desc b{color:var(--ink);font-weight:500}
+.hero-cta{
+  margin-top:42px;display:flex;gap:16px;flex-wrap:wrap;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:14px 30px;border-radius:999px;font-size:14px;letter-spacing:.14em;
+  border:1px solid transparent;cursor:pointer;transition:all .35s var(--ease);
+  font-family:var(--sans);
+}
+.btn-primary{background:var(--green);color:#071009;font-weight:500}
+.btn-primary:hover{box-shadow:0 0 34px var(--green-glow);transform:translateY(-2px)}
+.btn-ghost{border-color:var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--green);color:var(--green)}
+.scroll-hint{
+  position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+  z-index:3;display:flex;flex-direction:column;align-items:center;gap:10px;
+  color:var(--ink-faint);font-size:11px;letter-spacing:.4em;font-family:var(--mono);
+}
+.scroll-hint i{width:12px;height:42px;border-radius:999px;background:var(--green);position:relative;display:block;margin:22px auto 0}
+.scroll-hint i::before,.scroll-hint i::after{content:'';position:absolute;left:50%;width:9px;height:9px;border-left:2.5px solid var(--green);border-top:2.5px solid var(--green)}
+.scroll-hint i::before{top:-18px;transform:translateX(-50%) rotate(45deg)}
+.scroll-hint i::after{bottom:-18px;transform:translateX(-50%) rotate(-135deg)}
+@keyframes blink{0%,16%,100%{opacity:.1}50%{opacity:1}}
+@keyframes drip{0%,100%{transform:translateY(0)}50%{transform:translateY(12px)}}
+
+/* ============ 通用显现动画 ============ */
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.12s}
+.reveal.d2{transition-delay:.24s}
+.reveal.d3{transition-delay:.36s}
+
+/* ============ 关于 ============ */
+.about-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:64px;align-items:start}
+.about-card{
+  border:1px solid var(--line);border-radius:18px;overflow:hidden;
+  background:var(--bg-2);
+}
+.about-card img{width:100%;display:block}
+.about-card .cap{
+  padding:16px 22px;font-size:12px;color:var(--ink-faint);
+  letter-spacing:.1em;border-top:1px solid var(--line);font-family:var(--mono);
+}
+.info-list{display:flex;flex-direction:column;gap:30px}
+.info-item{}
+.info-item h3{
+  font-family:var(--serif);font-size:19px;font-weight:700;margin-bottom:8px;
+  display:flex;align-items:center;gap:12px;
+}
+.info-item h3::before{content:"";width:8px;height:8px;background:var(--green);border-radius:50%;box-shadow:0 0 12px var(--green-glow)}
+.info-item p{color:var(--ink-dim);font-size:15px}
+.info-item p b{color:var(--ink);font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.chip{
+  font-size:13px;padding:7px 16px;border-radius:999px;
+  border:1px solid var(--line);color:var(--ink-dim);
+}
+.chip.hot{border-color:rgba(61,240,198,.4);color:var(--green)}
+.timeline{position:relative;padding-left:26px;display:flex;flex-direction:column;gap:28px}
+.timeline::before{
+  content:"";position:absolute;left:7px;top:6px;bottom:6px;width:1px;
+  background:linear-gradient(var(--green),rgba(61,240,198,.05));
+}
+.tl{position:relative}
+.tl::before{
+  content:"";position:absolute;left:-26px;top:8px;width:15px;height:15px;border-radius:50%;
+  background:var(--bg);border:2px solid var(--green);box-shadow:0 0 14px var(--green-glow);
+}
+.tl h4{font-family:var(--serif);font-size:17px;font-weight:700}
+.tl .meta{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--green);margin:3px 0 8px}
+.tl p{font-size:14px;color:var(--ink-dim)}
+
+/* ============ 关于 · 海报主视觉 & 策展条目 ============ */
+.poster{
+  position:relative;border-radius:20px;overflow:hidden;
+  aspect-ratio:7/10;border:1px solid var(--line);
+  background:var(--bg-2);
+}
+.poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(.22) contrast(1.06)}
+.poster::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(10,14,13,.2),transparent 32%,transparent 52%,rgba(10,14,13,.95) 88%);
+}
+.poster .pk{
+  position:absolute;top:24px;left:26px;z-index:2;
+  font-family:var(--mono);font-size:11px;letter-spacing:.42em;text-transform:uppercase;
+  color:rgba(238,242,236,.82);display:flex;align-items:center;gap:12px;
+}
+.poster .pk::before{content:"";width:26px;height:1px;background:var(--green)}
+.poster .corner{
+  position:absolute;top:20px;right:22px;z-index:2;
+  font-family:var(--mono);font-size:11px;letter-spacing:.24em;color:var(--ink-faint);
+}
+.poster .pt{position:absolute;left:26px;right:26px;bottom:24px;z-index:2}
+.poster .pt .zh{font-family:var(--serif);font-weight:900;font-size:clamp(34px,4vw,46px);line-height:1.04;color:var(--ink)}
+.poster .pt .en{
+  font-family:var(--mono);font-weight:500;font-size:14px;letter-spacing:.3em;
+  color:var(--green);margin:10px 0 14px;display:block;
+}
+.poster .pt .role{font-size:13px;color:var(--ink-dim);letter-spacing:.12em;line-height:1.8}
+.poster .tags2{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+.poster .tags2 span{
+  font-size:10.5px;letter-spacing:.16em;color:var(--ink);
+  border:1px solid rgba(255,255,255,.28);padding:5px 12px;border-radius:999px;
+  background:rgba(10,14,13,.4);
+}
+.entries{display:flex;flex-direction:column}
+.entry{border-top:1px solid var(--line);padding:22px 4px 24px;transition:background .4s,border-color .4s;border-radius:10px;margin:0 -10px;padding-left:14px;padding-right:14px}
+.entry:hover{background:rgba(61,240,198,.03)}
+.entry .row{display:flex;align-items:baseline;gap:16px}
+.entry .no{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--green);flex:none;width:46px}
+.entry h3{font-family:var(--serif);font-size:19px;font-weight:700}
+.entry .body{margin-top:14px;padding-left:62px}
+.entry .body p{font-size:14px;color:var(--ink-dim)}
+.entry .body p b{color:var(--ink);font-weight:500}
+.entry .edu{display:flex;flex-direction:column;gap:18px}
+.entry .edu .line{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:baseline}
+.entry .edu h4{font-family:var(--serif);font-size:15.5px;font-weight:700;color:var(--ink)}
+.entry .edu .yr{font-family:var(--mono);font-size:12px;color:var(--green);letter-spacing:.12em;flex:none}
+.entry .edu .course{margin-top:4px;font-size:13px;color:var(--ink-faint);line-height:1.7}
+.honor-list{display:flex;flex-direction:column;gap:9px;margin-top:2px}
+.honor-list li{list-style:none;display:flex;gap:12px;align-items:baseline;font-size:14px;color:var(--ink-dim)}
+.honor-list li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--gold);margin-top:9px;box-shadow:0 0 10px rgba(232,196,104,.5)}
+.honor-list li b{color:var(--ink);font-weight:500}
+@media(max-width:720px){
+  .entry .body{padding-left:0}
+  .poster .corner{display:none}
+}
+
+/* ============ 项目索引 ============ */
+#works .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.work-card{
+  position:relative;border-radius:20px;overflow:hidden;
+  border:1px solid var(--line);background:var(--bg-2);
+  aspect-ratio:3/4;
+  transition:transform .5s var(--ease),border-color .5s;
+  display:flex;align-items:flex-end;
+}
+.work-card:hover{transform:translateY(-6px) scale(1.04);border-color:rgba(61,240,198,.5)}
+.work-card img.pic{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease);filter:saturate(.82)}
+.work-card:hover img.pic{transform:none;filter:saturate(1)}
+.work-card .shade{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(10,14,13,.05) 30%,rgba(10,14,13,.92) 82%);
+}
+.work-card .body{position:relative;padding:28px 26px;width:100%}
+.work-card .no{
+  font-family:var(--mono);font-size:12px;letter-spacing:.3em;color:var(--green);
+  margin-bottom:10px;display:block;
+}
+.work-card h3{font-family:var(--serif);font-size:26px;font-weight:900;margin-bottom:8px}
+.work-card .tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.work-card .tags span{
+  font-size:11px;letter-spacing:.12em;color:var(--ink);
+  border:1px solid rgba(255,255,255,.22);padding:4px 12px;border-radius:999px;
+}
+.work-card p{font-size:13.5px;color:var(--ink-dim);line-height:1.65}
+.work-card .go{
+  margin-top:16px;display:inline-flex;align-items:center;gap:8px;
+  font-size:13px;letter-spacing:.18em;color:var(--green);font-family:var(--mono);
+}
+.work-card .go svg{transition:transform .35s var(--ease)}
+.work-card:hover .go svg{transform:translateX(6px)}
+
+/* ============ 项目详情通用 ============ */
+.project{position:relative;border-top:1px solid var(--line)}
+.project:nth-of-type(even){background:var(--bg-2)}
+.p-head{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center;margin-bottom:70px}
+.p-head .imgbox{
+  border-radius:18px;overflow:hidden;border:1px solid var(--line);
+  position:relative;
+}
+.p-head .imgbox img{width:100%;height:auto}
+.p-head .imgbox::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  box-shadow:inset 0 0 80px rgba(10,14,13,.5);
+}
+.p-no{font-family:var(--mono);font-size:13px;letter-spacing:.4em;color:var(--green);margin-bottom:14px}
+.p-head h2{font-family:var(--serif);font-weight:900;font-size:clamp(30px,4.6vw,54px);line-height:1.08;margin-bottom:18px}
+.p-head .en2{font-family:var(--mono);font-weight:500;color:var(--ink-faint);letter-spacing:.2em;font-size:14px;margin-bottom:26px}
+.p-head p{color:var(--ink-dim);font-size:15.5px}
+.p-head p b{color:var(--ink);font-weight:500}
+.p-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.p-meta span{
+  font-size:12px;letter-spacing:.1em;color:var(--ink);
+  border:1px solid var(--line);padding:7px 16px;border-radius:999px;background:rgba(255,255,255,.02);
+}
+.p-meta span b{color:var(--green);font-weight:500}
+.p-head.rev .imgbox{order:2}
+.p-head.rev > div:last-child{order:1}
+.vplayer{margin-top:4px}
+.vplayer video{width:100%;border-radius:16px;border:1px solid var(--line);display:block;background:#000}
+
+/* 分块 */
+.block{margin-bottom:64px}
+.block h3.sec-t{
+  font-family:var(--serif);font-size:22px;font-weight:700;margin-bottom:18px;
+  display:flex;align-items:baseline;gap:14px;
+}
+.block h3.sec-t::after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* 三视角卡片 */
+.persp{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.persp-card{border:1px solid var(--line);border-radius:16px;padding:26px;background:rgba(255,255,255,.015);transition:border-color .4s,transform .4s}
+.persp-card:hover{border-color:rgba(61,240,198,.45);transform:translateY(-4px)}
+.persp-card.static:hover{border-color:var(--line);transform:none}
+.persp-card .idx{font-family:var(--mono);font-size:12px;color:var(--green);letter-spacing:.25em}
+.persp-card h4{font-family:var(--serif);font-size:17px;font-weight:700;margin:10px 0 10px}
+.persp-card p{font-size:13.5px;color:var(--ink-dim)}
+
+/* 流程可视化 */
+.flow{
+  border:1px solid var(--line);border-radius:18px;padding:38px 30px;
+  background:radial-gradient(800px 300px at 30% 0%,rgba(61,240,198,.06),transparent),var(--bg);
+  overflow-x:auto;
+}
+.flow-inner{min-width:820px}
+.flow-main{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:20px}
+.f-node{
+  text-align:center;padding:14px 18px;border-radius:12px;
+  border:1px solid rgba(61,240,198,.35);background:rgba(61,240,198,.05);
+  min-width:118px;
+}
+.f-node b{display:block;font-family:var(--serif);font-size:15px;font-weight:700;color:var(--ink)}
+.f-node span{font-size:11px;color:var(--ink-faint);letter-spacing:.06em}
+.f-node.start{border-color:var(--gold);background:rgba(232,196,104,.07)}
+.f-node.start b{color:var(--gold)}
+.f-node.end{border-color:var(--green);background:rgba(61,240,198,.12)}
+.f-node.end b{color:var(--green)}
+.f-arrow{flex:0 0 44px;color:var(--green);opacity:.7;display:flex;justify-content:center}
+.f-arrow svg{width:22px;height:22px}
+.flow-branch{display:flex;align-items:stretch;justify-content:center;gap:0;margin:18px 0}
+.b-node{
+  flex:1;max-width:190px;text-align:center;padding:12px 14px;border-radius:12px;
+  border:1px dashed rgba(61,240,198,.4);background:rgba(61,240,198,.03);
+}
+.b-node b{display:block;font-size:13.5px;color:var(--ink)}
+.b-node span{font-size:11px;color:var(--ink-faint)}
+.flow-note{
+  text-align:center;margin-top:22px;font-size:12px;color:var(--ink-faint);
+  letter-spacing:.14em;font-family:var(--mono);
+}
+.flow-note svg{width:14px;height:14px;vertical-align:-2px;margin:0 6px;color:var(--green)}
+
+/* 画廊 */
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.gallery .g{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);aspect-ratio:16/10;cursor:pointer;transition:transform .5s var(--ease),border-color .5s}
+.gallery .g img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.gallery .g:hover{transform:scale(1.04);border-color:rgba(61,240,198,.5)}
+.gallery .g:hover img{transform:none}
+.gallery .g figcaption{
+  position:absolute;inset:auto 0 0 0;padding:26px 16px 12px;font-size:12px;color:var(--ink);
+  background:linear-gradient(transparent,rgba(10,14,13,.9));letter-spacing:.06em;
+}
+.gallery.two{grid-template-columns:repeat(2,1fr)}
+.gallery.four{grid-template-columns:repeat(4,1fr)}
+.gallery .g.tall{aspect-ratio:3/4}
+
+/* 流程原图（不裁剪） */
+.flowimg{margin:0}
+.flowimg img{width:100%;border-radius:14px;border:1px solid var(--line);display:block}
+.flowimg figcaption{font-size:12px;color:var(--ink-faint);text-align:center;margin-top:8px;letter-spacing:.1em}
+
+/* 统计 / 数据 */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.stat{
+  border:1px solid var(--line);border-radius:16px;padding:30px 26px;text-align:center;
+  background:rgba(255,255,255,.015);position:relative;overflow:hidden;
+}
+.stat::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--green);
+  opacity:0;transition:opacity .4s;
+}
+.stat:hover::before{opacity:1}
+.stat .num{font-family:var(--mono);font-weight:700;font-size:46px;color:var(--green);line-height:1}
+.stat .lbl{font-size:13px;color:var(--ink-dim);margin-top:10px;letter-spacing:.08em}
+.stat .sub{font-size:11px;color:var(--ink-faint);margin-top:6px}
+
+/* 柱状图 */
+.bars{display:flex;align-items:flex-end;gap:14px;height:220px;padding:10px 6px 0;border-bottom:1px solid var(--line)}
+.bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%;justify-content:flex-end}
+.bar .pill{width:100%;max-width:52px;border-radius:8px 8px 3px 3px;position:relative;transition:height 1s var(--ease)}
+.bar .pill.out{background:linear-gradient(180deg,var(--green),var(--green-deep));box-shadow:0 0 18px rgba(61,240,198,.25)}
+.bar .pill.in{background:linear-gradient(180deg,#3a4a43,#222e29)}
+.bar .pill b{position:absolute;top:-26px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:12px;color:var(--ink);font-weight:500;white-space:nowrap}
+.bar .y{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+.bar .pill.start-0{height:0}
+.legend{display:flex;gap:26px;margin-top:18px;font-size:13px;color:var(--ink-dim)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:8px;vertical-align:-1px}
+.legend .lo{background:var(--green)}
+.legend .li{background:#3a4a43}
+
+/* 呼吸圆环 */
+.rings{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;padding:20px 0}
+.ring{width:150px;height:150px;position:relative}
+.ring svg{transform:rotate(-90deg);width:100%;height:100%}
+.ring .track{fill:none;stroke:#223029;stroke-width:9}
+.ring .fill{fill:none;stroke:var(--green);stroke-width:9;stroke-linecap:round;filter:drop-shadow(0 0 6px var(--green-glow));transition:stroke-dashoffset 1.4s var(--ease)}
+.ring .val{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:30px;color:var(--ink)}
+.ring .lbl{position:absolute;inset:auto 0 -30px 0;text-align:center;font-size:12px;color:var(--ink-dim);letter-spacing:.08em}
+
+/* 双视角对比 */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.duo-card{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--bg)}
+.duo-card img{width:100%;height:230px;object-fit:cover;filter:saturate(.8)}
+.duo-card .txt{padding:24px}
+.duo-card .k{font-family:var(--mono);font-size:12px;letter-spacing:.25em;color:var(--green);margin-bottom:10px}
+.duo-card h4{font-family:var(--serif);font-size:19px;font-weight:700;margin-bottom:10px}
+.duo-card p{font-size:13.5px;color:var(--ink-dim)}
+.duo-card.red .k{color:var(--red)}
+
+/* 视频链接 */
+.videolink{
+  display:inline-flex;align-items:center;gap:14px;
+  border:1px solid rgba(61,240,198,.4);border-radius:999px;
+  padding:14px 26px;color:var(--green);font-family:var(--mono);
+  font-size:14px;letter-spacing:.08em;transition:all .35s var(--ease);
+}
+.videolink:hover{background:var(--green);color:#071009;box-shadow:0 0 30px var(--green-glow)}
+.videolink .play{width:34px;height:34px;border-radius:50%;border:1px solid currentColor;display:flex;align-items:center;justify-content:center}
+.videolink .play svg{width:12px;height:12px;margin-left:2px}
+
+/* 引用 */
+.quote{
+  border-left:3px solid var(--green);padding:22px 26px;margin:26px 0;
+  background:rgba(61,240,198,.04);border-radius:0 14px 14px 0;
+  font-family:var(--serif);font-size:16.5px;line-height:1.9;color:var(--ink);
+}
+.quote small{display:block;margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--green);letter-spacing:.15em}
+
+/* ============ 金铲铲 ============ */
+.tencent-hero{display:grid;grid-template-columns:.95fr 1.05fr;gap:48px;align-items:center}
+.tencent-hero .imgbox{border-radius:18px;overflow:hidden;border:1px solid var(--line);position:relative}
+.tencent-hero .imgbox img{width:100%;height:auto}
+.tencent-hero .imgbox::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 70px rgba(10,14,13,.45);pointer-events:none}
+.tag-tencent{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--gold);
+  border:1px solid rgba(232,196,104,.4);border-radius:999px;padding:6px 14px;margin-bottom:16px;
+}
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px}
+.pillar{border:1px solid var(--line);border-radius:14px;padding:18px 16px;text-align:center;background:rgba(255,255,255,.015)}
+.pillar .dot{width:26px;height:26px;border-radius:50%;margin:0 auto 10px;box-shadow:0 0 14px rgba(255,255,255,.15)}
+.pillar h4{font-family:var(--serif);font-size:15px;font-weight:700}
+.pillar span{font-size:11.5px;color:var(--ink-faint);letter-spacing:.1em}
+.pillar.gold .dot{background:linear-gradient(135deg,#f5d67b,#c89b3c)}
+.pillar.blue .dot{background:linear-gradient(135deg,#7cc0f5,#3a6fc4)}
+.pillar.purple .dot{background:linear-gradient(135deg,#d9a4f5,#8f4fc4)}
+.pillar.red .dot{background:linear-gradient(135deg,#f58b7c,#c43a3a)}
+
+/* ============ 腾讯板块 · 四层级 ============ */
+.hero-k{
+  font-family:var(--mono);font-size:12px;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--green);margin:0 0 12px;display:flex;align-items:center;gap:12px;
+}
+.hero-k::before{content:"";width:24px;height:1px;background:var(--green)}
+.stages{display:flex;flex-direction:column;margin-top:70px}
+.stage{
+  display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;
+  padding:60px 0;border-top:1px solid var(--line);
+}
+.stage.rev .txt{order:2}
+.stage.rev .media{order:1}
+.stage .k{
+  font-family:var(--mono);font-size:12px;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--green);margin-bottom:16px;display:flex;align-items:center;gap:12px;
+}
+.stage .k::before{content:"";width:24px;height:1px;background:var(--green)}
+.stage h3{font-family:var(--serif);font-weight:900;font-size:clamp(22px,3vw,30px);margin-bottom:6px}
+.stage .en2{font-family:var(--mono);font-size:12px;letter-spacing:.24em;color:var(--ink-faint);margin-bottom:18px}
+.stage .txt p{color:var(--ink-dim);font-size:14.5px;line-height:1.95}
+.stage .txt p b{color:var(--ink);font-weight:500}
+.stage .media{display:flex;flex-direction:column;gap:14px;min-width:0}
+.stage .media img{width:100%;border-radius:14px;border:1px solid var(--line);display:block}
+.stage .cap{font-size:11.5px;color:var(--ink-faint);text-align:center;letter-spacing:.1em}
+.kw{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.kw span{
+  font-size:12.5px;letter-spacing:.1em;color:var(--green);
+  border:1px solid rgba(61,240,198,.4);padding:6px 16px;border-radius:999px;
+  background:rgba(61,240,198,.05);
+}
+.layers{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}
+.layers div{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:rgba(255,255,255,.015)}
+.layers b{display:block;font-family:var(--serif);font-size:14px;color:var(--ink);margin-bottom:3px}
+.layers span{font-size:11.5px;color:var(--ink-faint)}
+.seq{display:flex;gap:5px;margin-top:16px;flex-wrap:wrap;align-items:center}
+.seq span{
+  font-size:11px;color:var(--ink);border:1px dashed rgba(61,240,198,.5);
+  padding:4px 11px;border-radius:999px;letter-spacing:.06em;
+}
+.seq span b{color:var(--green);font-weight:500}
+.seq svg{width:8px;height:8px;flex:none;color:var(--green)}
+.deliver{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.deliver span{
+  font-size:12.5px;color:var(--ink);background:rgba(255,255,255,.03);
+  border:1px solid var(--line);padding:8px 16px;border-radius:999px;letter-spacing:.06em;
+}
+.approved{
+  margin-top:24px;display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--serif);font-size:15px;color:var(--gold);
+  border:1px solid rgba(232,196,104,.45);padding:12px 22px;border-radius:999px;
+  background:rgba(232,196,104,.06);
+}
+.media-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.media-grid.three{grid-template-columns:repeat(3,1fr)}
+.media-grid .g2{
+  border-radius:14px;overflow:hidden;border:1px solid var(--line);
+  position:relative;aspect-ratio:16/10;cursor:pointer;background:var(--bg);
+  transition:transform .5s var(--ease),border-color .5s;
+}
+.media-grid .g2 img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease);border:0;border-radius:0}
+.media-grid .g2:hover{transform:scale(1.04);border-color:rgba(61,240,198,.5)}
+.media-grid .g2:hover img{transform:none}
+.media-grid .g2 figcaption{
+  position:absolute;inset:auto 0 0 0;padding:22px 12px 10px;
+  font-size:11.5px;color:var(--ink);letter-spacing:.05em;
+  background:linear-gradient(transparent,rgba(10,14,13,.9));
+}
+@media(max-width:1024px){
+  .stage{grid-template-columns:1fr;gap:30px}
+  .stage.rev .txt{order:1}
+  .stage.rev .media{order:2}
+}
+
+/* ============ Footer ============ */
+footer{border-top:1px solid var(--line);padding:70px 0 46px;background:var(--bg-2)}
+.contact-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:start}
+.contact-grid h2{font-family:var(--serif);font-weight:900;font-size:clamp(26px,4vw,40px);line-height:1.2;margin-bottom:16px}
+.contact-grid h2 em{font-style:normal;color:var(--green)}
+.contact-links{display:flex;flex-direction:column;gap:14px;margin-top:26px}
+.contact-links a{
+  display:flex;align-items:center;gap:14px;color:var(--ink-dim);
+  font-family:var(--mono);font-size:15px;letter-spacing:.06em;transition:color .3s;
+}
+.contact-links a:hover{color:var(--green)}
+.contact-links svg{width:18px;height:18px;color:var(--green);flex:none}
+.copy{
+  margin-top:54px;padding-top:26px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-size:12px;color:var(--ink-faint);font-family:var(--mono);letter-spacing:.1em;
+}
+.skills-panel{display:flex;flex-direction:column;gap:12px}
+.skills-panel .sk{display:flex;align-items:center;gap:16px}
+.skills-panel .sk span{font-size:13px;color:var(--ink-dim);width:110px;flex:none;letter-spacing:.06em}
+.skills-panel .track{flex:1;height:5px;background:#1c2621;border-radius:99px;overflow:hidden}
+.skills-panel .fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--green-deep),var(--green));width:0;transition:width 1.2s var(--ease)}
+.skills-panel .sk b{font-family:var(--mono);font-size:12px;color:var(--green);font-weight:500;width:36px;text-align:right}
+
+/* ============ 灯箱 ============ */
+#lightbox{
+  position:fixed;inset:0;z-index:1100;background:rgba(5,8,7,.94);
+  display:none;align-items:center;justify-content:center;padding:5vh 4vw;
+  cursor:zoom-out;
+}
+#lightbox.open{display:flex}
+#lightbox img{max-width:92vw;max-height:88vh;border-radius:10px;box-shadow:0 20px 80px rgba(0,0,0,.6);cursor:default}
+#lightbox .cap{position:fixed;bottom:26px;left:0;right:0;text-align:center;color:var(--ink-dim);font-size:13px;letter-spacing:.1em;font-family:var(--mono)}
+#lightbox .close{
+  position:fixed;top:22px;right:28px;width:44px;height:44px;border-radius:50%;
+  border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--ink);
+  font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;
+}
+
+/* ============ 响应式 ============ */
+@media(max-width:1024px){
+  .about-grid,.p-head,.tencent-hero,.contact-grid{grid-template-columns:1fr;gap:44px}
+  #works .grid{grid-template-columns:1fr 1fr}
+  .persp,.stats{grid-template-columns:1fr 1fr}
+  .gallery{grid-template-columns:1fr 1fr}
+}
+@media(max-width:720px){
+  .section{padding:80px 0}
+  .wrap{padding:0 22px}
+  #topnav ul{
+    display:none;position:absolute;top:100%;left:0;right:0;
+    background:rgba(8,12,11,.96);backdrop-filter:blur(14px);
+    flex-direction:column;padding:14px 22px 22px;gap:4px;border-bottom:1px solid var(--line);
+  }
+  #topnav ul.open{display:flex}
+  .menu-btn{display:block}
+  #works .grid,.persp,.stats,.duo,.gallery,.gallery.two,.gallery.four,.pillars{grid-template-columns:1fr}
+  .hero-name{font-size:clamp(44px,14vw,72px)}
+  .p-head h2{font-size:30px}
+  .flow{padding:26px 18px}
+  .rings{gap:60px}
+  .scroll-hint{display:none}
+}
+
+/* 无障碍：减少动效 */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important}
+  html{scroll-behavior:auto}
+}
+
+/* ============ 代表作品 · 横向滑动 ============ */
+#works .grid{
+  display:flex;gap:22px;overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  padding:14px 2px 20px;
+  scrollbar-width:none;
+}
+#works .grid::-webkit-scrollbar{display:none;height:0}
+#works .grid .work-card{
+  flex:0 0 clamp(300px,70vw,430px);
+  aspect-ratio:4/3;
+  scroll-snap-align:start;
+}
+.works-slider{position:relative}
+.ws-btn{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:6;
+  width:46px;height:46px;border-radius:50%;
+  border:1px solid var(--line);background:rgba(10,14,13,.85);color:var(--green);
+  font-size:17px;line-height:1;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .3s,border-color .3s,opacity .3s;
+}
+.ws-btn:hover{background:var(--green);color:#071009;border-color:var(--green)}
+.ws-prev{left:-20px}
+.ws-next{right:-20px}
+@media (max-width:900px){.ws-btn{display:none}}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- ============ 导航 ============ -->
+<nav id="topnav">
+  <div class="wrap">
+    <a class="brand" href="#hero"><b>Z</b>C<em>Y</em>·<span style="color:var(--ink-faint);font-weight:400">2026</span></a>
+    <button class="menu-btn" id="menuBtn" aria-label="菜单">菜单</button>
+    <ul id="navList">
+      <li><a href="#about" data-nav="about">关于</a></li>
+      <li><a href="#works" data-nav="works">项目</a></li>
+      <li><a href="#tencent" data-nav="tencent">腾讯游戏</a></li>
+      <li><a href="#mfa" data-nav="mfa">毕业项目</a></li>
+      <li><a href="#p1" data-nav="p1">消失的烟花</a></li>
+      <li><a href="#p2" data-nav="p2">无尽回廊</a></li>
+      <li><a href="#p3" data-nav="p3">回声步伐</a></li>
+      <li><a href="#contact" data-nav="contact">联系</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header id="hero">
+  <canvas id="fx"></canvas>
+  <div class="hero-veil"></div>
+  <div class="wrap hero-inner">
+    <p class="hero-kicker reveal">Portfolio · 影音交互设计 · 交互影像体验</p>
+    <h1 class="hero-name reveal d1">
+      <span class="zh">张诚扬</span>
+      <span class="en">ZHANG CHENGYANG</span>
+    </h1>
+    <div class="hero-sub reveal d2">
+      <span class="hero-tag"><b>沉浸式影像</b> · 空间交互</span>
+      <span class="hero-tag"><b>声音设计</b> · 交互装置</span>
+      <span class="hero-tag"><b>游戏</b> UI / 交互</span>
+    </div>
+    <p class="hero-desc reveal d2">
+      以<b>影像、声音与空间</b>为媒介的<b>交互设计师</b>。毕业于湖北工业大学产品设计，现于格拉斯哥艺术学院攻读<b>动态影像声音硕士</b>；曾在腾讯游戏参与金铲铲项目交互设计。
+    </p>
+    <div class="hero-cta reveal d3">
+      <a class="btn btn-primary" href="#works">浏览项目
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn btn-ghost" href="#contact">联系我</a>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>SCROLL</span><i></i></div>
+</header>
+
+<!-- ============ 关于 ============ -->
+<section class="section" id="about">
+  <div class="wrap">
+    <p class="eyebrow reveal">01 · About</p>
+    <h2 class="title reveal">个人<em>档案</em></h2>
+    <div class="about-grid" style="margin-top:44px">
+
+      <!-- 海报式主视觉 -->
+      <div class="poster reveal">
+        <img src="https://aka.doubaocdn.com/s/XyyDqlSitD" alt="张诚扬——夜晚海边的潮流人像">
+        <span class="pk">Portfolio · 2026</span>
+        <span class="corner">N° 315802 / ZCY</span>
+        <div class="pt">
+          <span class="zh">张诚扬</span>
+          <span class="en">ZHANG CHENGYANG</span>
+          <p class="role">影音交互设计 · 交互影像体验<br>声音设计 / 沉浸式空间 / 游戏交互</p>
+          <div class="tags2">
+            <span>SPACE</span><span>SOUND</span><span>IMAGE</span><span>GAME</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 策展式档案条目 -->
+      <div class="entries reveal d1">
+        <div class="entry">
+          <div class="row">
+            <span class="no">01</span>
+            <h3>教育背景</h3>
+          </div>
+          <div class="body">
+            <div class="edu">
+              <div>
+                <div class="line">
+                  <h4>格拉斯哥艺术学院 · 动态影像声音 · 硕士</h4>
+                  <span class="yr">2025.09 — 2026.11</span>
+                </div>
+                <div class="course">声音交互设计 / 多模态用户体验 / 沉浸式交互原型 / 杜比全景声与空间音频</div>
+              </div>
+              <div>
+                <div class="line">
+                  <h4>湖北工业大学 · 产品设计 · 学士</h4>
+                  <span class="yr">2020.09 — 2024.06</span>
+                </div>
+                <div class="course">交互设计原理 / 用户研究 / 人机工程学 / 数字媒体基础</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="entry">
+          <div class="row">
+            <span class="no">02</span>
+            <h3>荣誉</h3>
+          </div>
+          <div class="body">
+            <ul class="honor-list">
+              <li><b>日本艺术设计大赛</b> · 产品设计组二等奖</li>
+              <li><b>校优秀学生干部</b> · <b>院优秀学生干部</b></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="entry">
+          <div class="row">
+            <span class="no">03</span>
+            <h3>技能</h3>
+          </div>
+          <div class="body">
+            <div class="chips">
+              <span class="chip hot">TouchDesigner</span>
+              <span class="chip hot">Figma</span>
+              <span class="chip hot">Pro Tools</span>
+              <span class="chip">Unreal Engine</span>
+              <span class="chip">Photoshop</span>
+              <span class="chip">剪映</span>
+              <span class="chip">雅思 6.0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="entry">
+          <div class="row">
+            <span class="no">04</span>
+            <h3>校园与生活</h3>
+          </div>
+          <div class="body">
+            <p>湖北工业大学<b>校学生会副主席</b> &amp; 院学生会<b>文体部部长</b></p>
+            <p style="margin-top:8px">穿搭——展示个性、拒绝同质化；旅行——游历过全球十多个国家。</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ 项目索引 ============ -->
+<section class="section" id="works" style="background:var(--bg-2);border-top:1px solid var(--line)">
+  <div class="wrap">
+    <p class="eyebrow reveal">02 · Works</p>
+    <h2 class="title reveal">代表<em>作品</em></h2>
+    <p class="lead reveal d1" style="margin-bottom:48px">一段腾讯游戏实战经历，一部硕士毕业设计，三个以「身体 · 声音 · 空间」为主线的交互作品——从游戏 UI 反馈，到中式梦核恐怖体验，再到沉浸式影像空间。</p>
+    <div class="works-slider">
+      <button class="ws-btn ws-prev" aria-label="上一个"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button>
+      <div class="grid">
+      <a class="work-card reveal" href="#tencent">
+        <img class="pic" src="https://aka.doubaocdn.com/s/L9P3z1ZDmL" alt="金铲铲之战——阿狸六杀播报条上色方案">
+        <div class="shade"></div>
+        <div class="body">
+          <span class="no">INTERN · 腾讯游戏</span>
+          <h3>金铲铲之战</h3>
+          <div class="tags"><span>游戏交互设计</span><span>播报条 · 击杀反馈</span></div>
+          <p>参与《金铲铲之战》森林主题播报条与击杀反馈设计，聚焦击杀、胜利、失败等即时战斗结果的 UI 信息传达与情绪反馈。</p>
+          <span class="go">查看项目 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </a>
+      <a class="work-card reveal d1" href="#mfa">
+        <img class="pic" src="https://aka.doubaocdn.com/s/PUUTidW1Zr" alt="中式梦核恐怖游戏——拱门红灯笼主视觉">
+        <div class="shade"></div>
+        <div class="body">
+          <span class="no">MFA · 硕士毕业</span>
+          <h3>中式梦核恐怖游戏</h3>
+          <div class="tags"><span>梦核恐怖</span><span>声音设计</span></div>
+          <p>以中式梦核美学构建的互动恐怖体验——重现记忆中的百货商场与老街巷，让熟悉感与不安感在同一空间交织。</p>
+          <span class="go">查看项目 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </a>
+      <a class="work-card reveal d2" href="#p1">
+        <img class="pic" src="https://aka.doubaocdn.com/s/fVveLnLWLy" alt="消失的烟花——青绿色粒子光效">
+        <div class="shade"></div>
+        <div class="body">
+          <span class="no">PROJECT 01</span>
+          <h3>消失的烟花</h3>
+          <div class="tags"><span>影音交互空间</span><span>沉浸式体验</span></div>
+          <p>以再现烟花为中心的沉浸式空间交互设计——观众与粒子烟花互动，重新思考烟花文化的消逝与重生。</p>
+          <span class="go">查看项目 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </a>
+      <a class="work-card reveal d1" href="#p2">
+        <img class="pic" src="https://aka.doubaocdn.com/s/nX1fRF42Bu" alt="无尽回廊——幽暗走廊场景">
+        <div class="shade"></div>
+        <div class="body">
+          <span class="no">PROJECT 02</span>
+          <h3>无尽回廊</h3>
+          <div class="tags"><span>VR 恐怖游戏</span><span>游戏叙事</span></div>
+          <p>以 Elisa Lam 事件为背景的 VR 叙事游戏，以双相情感障碍为切入点，呼吁平等对待精神疾病患者。</p>
+          <span class="go">查看项目 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </a>
+      <a class="work-card reveal d2" href="#p3">
+        <img class="pic" src="https://aka.doubaocdn.com/s/DjUE7uOWUL" alt="回声步伐——发光灯管装置">
+        <div class="shade"></div>
+        <div class="body">
+          <span class="no">PROJECT 03</span>
+          <h3>回声步伐</h3>
+          <div class="tags"><span>交互装置</span><span>灯光设计</span></div>
+          <p>夜间跑步辅助互动装置：用特定频率闪烁的灯光，引导跑者跨越「极点」，进入「第二次呼吸」。</p>
+          <span class="go">查看项目 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </a>
+      </div>
+      <button class="ws-btn ws-next" aria-label="下一个"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 腾讯游戏 · 金铲铲 ============ -->
+<section class="project section" id="tencent">
+  <div class="wrap">
+    <div class="tencent-hero">
+      <div class="imgbox reveal">
+        <img src="https://aka.doubaocdn.com/s/L9P3z1ZDmL" alt="阿狸六杀播报横幅上色方案">
+      </div>
+      <div class="reveal d1">
+        <span class="tag-tencent">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.3 6.8.5-5.2 4.4 1.6 6.6L12 16.4 6.2 19.8l1.6-6.6L2.6 8.8l6.8-.5z"/></svg>
+          腾讯游戏 · 金铲铲之战
+        </span>
+        <p class="hero-k">01 · Overview</p>
+        <h2 class="title" style="margin-bottom:14px">英雄播报<em>UI 设计</em></h2>
+        <p style="color:var(--ink-dim);font-size:15.5px">
+          参与《金铲铲之战》森林主题<b style="color:var(--ink)">播报条与击杀反馈</b>设计，聚焦击杀、胜利、失败等即时战斗结果的 UI 信息传达与情绪反馈，在 1-2 秒内帮助玩家<b style="color:var(--ink)">快速识别结果</b>，兼顾视觉冲击与功能清晰度。
+        </p>
+        <div class="p-meta">
+          <span>交互设计实习生</span>
+          <span>2026.04 — 2026.06</span>
+          <span>UI 图标</span>
+          <span>动画分镜</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stages">
+
+      <div class="stage rev">
+        <div class="txt reveal">
+          <p class="k">02 · Concept</p>
+          <h3>概念设计</h3>
+          <div class="en2">VISUAL CONCEPT</div>
+          <p>通过竞品调研和内部素材分析，提炼森林、藤蔓、花朵、晶体、音符等<b>视觉关键词</b>，将播报条拆解为<b>四大层级</b>，以玩家认知流程为导向，确定横向构图、色彩分配和视觉流向。</p>
+          <div class="kw">
+            <span>森林</span><span>藤蔓</span><span>花朵</span><span>晶体</span><span>音符</span>
+          </div>
+          <div class="layers">
+            <div><b>角色视觉中心</b><span>认知焦点</span></div>
+            <div><b>背景氛围</b><span>情绪底色</span></div>
+            <div><b>击杀信息区</b><span>信息层级</span></div>
+            <div><b>装饰引导线</b><span>视觉流向</span></div>
+          </div>
+        </div>
+        <div class="media reveal d1">
+          <img src="https://aka.doubaocdn.com/s/lEpZU9QQVO" alt="森林主题徽章方案·四色系">
+          <span class="cap">森林主题徽章 · 方案一</span>
+          <img src="https://aka.doubaocdn.com/s/iG2Ll9e0D3" alt="森林主题徽章方案第二版">
+          <span class="cap">徽章方案 · 对比迭代</span>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="media reveal">
+          <div class="media-grid three">
+            <figure class="g2"><img src="https://aka.doubaocdn.com/s/qucnrPBYI2" alt="阿狸六杀飘带线稿"><figcaption>线稿变体 · 飘带构图</figcaption></figure>
+            <figure class="g2"><img src="https://aka.doubaocdn.com/s/yQs3qsOINL" alt="阿狸六杀线稿横幅"><figcaption>静态线稿 · AHRI</figcaption></figure>
+            <figure class="g2"><img src="https://aka.doubaocdn.com/s/L9P3z1ZDmL" alt="阿狸六杀上色横幅"><figcaption>上色方案 · AHRI</figcaption></figure>
+          </div>
+          <img src="https://aka.doubaocdn.com/s/9OCuFzt4it" alt="萨勒芬妮四格动画分镜线稿">
+          <span class="cap">四格动画分镜 · 登场 — 蓄力 — 攻击命中 — 胜利收束</span>
+        </div>
+        <div class="txt reveal d1">
+          <p class="k">03 · Execution</p>
+          <h3>方案执行</h3>
+          <div class="en2">DESIGN EXECUTION</div>
+          <p>使用 <b>Procreate</b> 完成多版静态线稿与上色方案，采用<b>「高饱和角色 + 低饱和背景」</b>策略解决色彩融合问题；同时设计四格动画分镜，通过角色姿态、音符轨迹、光环方向的变化，构建完整的<b>击杀反馈节奏</b>，输出可落地的动效脚本。</p>
+          <div class="seq">
+            <span><b>登场</b></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>蓄力</b></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>攻击命中</b></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span><b>胜利收束</b></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage rev">
+        <div class="txt reveal">
+          <p class="k">04 · Delivery</p>
+          <h3>迭代交付</h3>
+          <div class="en2">ITERATION &amp; DELIVERY</div>
+          <p>依据导师及同事反馈，快速迭代优化<b>构图、文字可读性、主题装饰密度与动效逻辑</b>，最终交付播报条设计方案、上色示意、动画分镜及详细设计说明，为后续视觉深化和动效制作提供清晰依据。</p>
+          <div class="deliver">
+            <span>播报条设计方案</span><span>上色示意</span><span>动画分镜</span><span>详细设计说明</span>
+          </div>
+          <div class="approved">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+            方案获得项目组认可
+          </div>
+        </div>
+        <div class="media reveal d1">
+          <img src="https://aka.doubaocdn.com/s/gfojlchPM2" alt="播报条与徽章汇总方案">
+          <span class="cap">最终交付 · 播报条与徽章汇总</span>
+        </div>
+      </div>
+
+    </div>
+  </div></section>
+<!-- ============ 硕士毕业项目 ============ -->
+<section class="project section" id="mfa">
+  <div class="wrap">
+    <div class="p-head rev">
+      <div class="imgbox reveal">
+        <img src="https://aka.doubaocdn.com/s/PUUTidW1Zr" alt="中式梦核恐怖游戏——拱门红灯笼主视觉">
+      </div>
+      <div class="reveal d1">
+        <p class="p-no">PROJECT · 硕士毕业项目</p>
+        <h2>中式梦核恐怖游戏</h2>
+        <div class="en2">CHINESE DREAMCORE HORROR</div>
+        <p>以<b>中式梦核</b>美学构建的互动恐怖体验——重现记忆中的百货商场、老街巷与老屋陈设，让<b>熟悉感与不安感</b>在同一空间交织。当熟悉的声音与空间从怀旧滑向心理不安，玩家在似曾相识中步步深入。</p>
+        <div class="p-meta">
+          <span>Unreal Engine 5</span>
+          <span>声音设计</span>
+          <span>互动体验</span>
+          <span>2026</span>
+        </div>
+        <div style="margin-top:28px">
+          <a class="videolink" href="#trailer">
+            <span class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            观看实机演示
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3 class="sec-t reveal">游戏场景</h3>
+      <div class="gallery two">
+        <figure class="g reveal">
+          <img src="https://aka.doubaocdn.com/s/BpCyp5AP6a" alt="红色走廊与木质门窗场景">
+          <figcaption>红色走廊 · 木质门窗与福字</figcaption>
+        </figure>
+        <figure class="g reveal d1">
+          <img src="https://aka.doubaocdn.com/s/ysHjKpiHsS" alt="福禄寿装饰画室内场景">
+          <figcaption>老屋陈设 · 福禄寿与倒福</figcaption>
+        </figure>
+        <figure class="g reveal d2">
+          <img src="https://aka.doubaocdn.com/s/1MDpZgMjWk" alt="红色中式街巷场景">
+          <figcaption>老街巷 · 红灯笼与卷帘门</figcaption>
+        </figure>
+        <figure class="g reveal d3">
+          <img src="https://aka.doubaocdn.com/s/9v9sv6q4ZV" alt="灯笼密集的中式街道场景">
+          <figcaption>深夜街巷 · 灯笼阵列</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3 class="sec-t reveal">设计核心</h3>
+      <div class="persp">
+        <div class="persp-card reveal">
+          <div class="idx">01 · DREAMCORE SPACE</div>
+          <h4>中式梦核场景</h4>
+          <p>百货商场、老街巷、老屋陈设——从记忆深处提取熟悉的空间符号，让"似曾相识"成为不安的入口。</p>
+        </div>
+        <div class="persp-card reveal d1">
+          <div class="idx">02 · ACTIVE LISTENING</div>
+          <h4>主动聆听交互</h4>
+          <p>玩家靠近物件、按下 E 键主动触发聆听——选择何时倾听，让每一次交互都成为节奏的掌控者。</p>
+        </div>
+        <div class="persp-card reveal d2">
+          <div class="idx">03 · UNRELIABLE SOUND</div>
+          <h4>不可靠的声音</h4>
+          <p>让"听到的"与"看到的"不再一致——声音脱离画面成为独立的叙事线索，持续制造心理不安。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="block" id="trailer">
+      <h3 class="sec-t reveal">实机演示</h3>
+      <div class="vplayer reveal">
+        <video controls preload="metadata" poster="https://aka.doubaocdn.com/s/PUUTidW1Zr">
+          <source src="https://aka.doubaocdn.com/s/7i9JDnfeY1" type="video/mp4">
+          您的浏览器不支持视频播放。
+        </video>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 项目 01：消失的烟花 ============ -->
+<section class="project section" id="p1">
+  <div class="wrap">
+    <div class="p-head">
+      <div class="imgbox reveal">
+        <img src="https://aka.doubaocdn.com/s/EKXxZu5ktM" alt="消失的烟花——青绿色粒子光效">
+      </div>
+      <div class="reveal d1">
+        <p class="p-no">PROJECT 01 · 个人项目</p>
+        <h2>消失的烟花</h2>
+        <div class="en2">THE DISAPPEARING FIREWORKS</div>
+        <p>一项以<b>再现烟花</b>为中心的空间交互设计，让人们理解烟花文化、体验烟花的视觉冲击，并思考这种文化是否应当被禁止。关于烟花文化的<b>消逝与重生</b>——通过互动装置，观众被邀请共同探索这一主题，摒弃「城市化与文化」的二元对立思维，并借助声音实验，以更具同理心的方式对待传统文化。</p>
+        <div class="p-meta">
+          <span>影音交互空间</span>
+          <span>沉浸式体验</span>
+          <span>未来遗产</span>
+          <span>实验动态影像</span>
+          <span>声音实验</span>
+          <span>主创 · 交互 &amp; 声音设计</span>
+        </div>
+        <div style="margin-top:28px">
+          <a class="videolink" href="#p1t">
+            <span class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            观看实机演示
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3 class="sec-t reveal">项目目的 —— 不同领域的人，对烟花有不同的感受</h3>
+      <div class="persp">
+        <div class="persp-card reveal static">
+          <div class="idx">VIEW 01 · 乡村</div>
+          <h4>活力与节日</h4>
+          <p>生活在乡下的人们觉得烟花充满活力、富有节日气氛。点燃烟花爆竹是家乡的象征，承载着童年回忆与对来年的期盼。</p>
+        </div>
+        <div class="persp-card reveal static d1">
+          <div class="idx">VIEW 02 · 城市</div>
+          <h4>渴望与管控</h4>
+          <p>城市里有人希望燃放，但管控过于严格。对他们而言，烟花代表故乡与幸福——却可能逐渐忘记了燃放烟花带来的那种感觉。</p>
+        </div>
+        <div class="persp-card reveal static d2">
+          <div class="idx">VIEW 03 · 少数声音</div>
+          <h4>负面与安全</h4>
+          <p>少数人认为烟花吵闹、有害环境且有安全隐患。他们的孩子可能只在电视上见过烟花，记忆只是照片。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3 class="sec-t reveal">体验流程</h3>
+      <figure class="flowimg reveal">
+        <img src="https://aka.doubaocdn.com/s/JdRXNnc5HJ" alt="烟花互动体验完整逻辑链路">
+        <figcaption>完整逻辑链路 · 历史 / 技术 / 演变 → 双路径体验 → 重新选择你的看法</figcaption>
+      </figure>
+    </div>
+
+    <div class="block">
+      <h3 class="sec-t reveal">观众如何体验</h3>
+      <div class="gallery two">
+        <figure class="g reveal">
+          <img src="https://aka.doubaocdn.com/s/fVveLnLWLy" alt="房间角落的烟花图案">
+          <figcaption>房间各个角落里，有不同领域的烟花图案</figcaption>
+        </figure>
+        <figure class="g reveal d1">
+          <img src="https://aka.doubaocdn.com/s/pNbch2icOM" alt="与粒子互动的光效">
+          <figcaption>与烟花粒子互动，改变它们的形状</figcaption>
+        </figure>
+        <figure class="g reveal d2">
+          <img src="https://aka.doubaocdn.com/s/PcB0blX1bK" alt="代表不同领域的声音">
+          <figcaption>每个领域内部，都有代表该领域的声音</figcaption>
+        </figure>
+        <figure class="g reveal d3">
+          <img src="https://aka.doubaocdn.com/s/webSC8n3wW" alt="互动空间布局示意">
+          <figcaption>空间布局 · 放映室 / 电子屏幕 / 场域选择 / 出口</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3 class="sec-t reveal">产出结果 —— 用 TouchDesigner 创造粒子烟花</h3>
+      <div class="gallery two">
+        <figure class="g reveal">
+          <img src="https://aka.doubaocdn.com/s/aPasxyj1HX" alt="TouchDesigner 粒子系统参数界面">
+          <figcaption>第一部分：TouchDesigner 创建粒子烟花效果 · Particles GPU</figcaption>
+        </figure>
+        <figure class="g reveal d1">
+          <img src="https://aka.doubaocdn.com/s/EKXxZu5ktM" alt="手部干预粒子烟花的抽象光效">
+          <figcaption>检测人手移动，作为「干预」手段影响粒子烟花的形状</figcaption>
+        </figure>
+      </div>
+      <div class="quote reveal" style="margin-top:26px">
+        当观众进入房间时，粒子数量增加；上传手部晃动的幅度数据，导致粒子产生晃动——象征着政策正在实施「干预」。
+        <small>INTERVENTION — 烟花文化 / 政策 / 观众的三方对话</small>
+      </div>
+      <div class="block" style="margin-top:30px">
+        <h3 class="sec-t reveal">AI 生成 · 空间场景效果图</h3>
+        <div class="gallery two">
+          <figure class="g reveal">
+            <img src="https://aka.doubaocdn.com/s/IsuqF3VtpS" alt="重新选择你的视角互动区">
+            <figcaption>重新选择你的视角 · 互动抉择区</figcaption>
+          </figure>
+          <figure class="g reveal d1">
+            <img src="https://aka.doubaocdn.com/s/4MMEaXUOnA" alt="通往烟花放映室的导览走廊">
+            <figcaption>通往烟花放映室的导览走廊</figcaption>
+          </figure>
+          <figure class="g reveal d2">
+            <img src="https://aka.doubaocdn.com/s/qJ1TOqQUhu" alt="手势干预粒子烟花互动装置">
+            <figcaption>手势干预 · 粒子烟花互动装置</figcaption>
+          </figure>
+          <figure class="g reveal d3">
+            <img src="https://aka.doubaocdn.com/s/L1Vnnq3tx3" alt="沉浸式烟花放映厅">
+            <figcaption>沉浸式烟花放映厅</figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="block" id="p1t">
+        <h3 class="sec-t reveal">实机演示</h3>
+        <div class="vplayer reveal">
+          <video controls preload="metadata" poster="https://aka.doubaocdn.com/s/EKXxZu5ktM">
+            <source src="https://aka.doubaocdn.com/s/qK6i60XtOx" type="video/mp4">
+            您的浏览器不支持视频播放。
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 项目 02：无尽回廊 ============ -->
+<section class="project section" id="p2">
+  <div class="wrap">
+    <div class="p-head">
+      <div class="imgbox reveal">
+        <img src="https://aka.doubaocdn.com/s/nX1fRF42Bu" alt="无尽回廊——幽暗走廊场景渲染">
+      </div>
+      <div class="reveal d1">
+        <p class="p-no">PROJECT 02 · 团队项目</p>
+        <h2>无尽回廊</h2>
+        <div class="en2">ENDLESS CORRIDOR</div>
+        <p>一款以 <b>Elisa Lam 事件</b>为背景的<b>虚拟现实叙事游戏</b>，以<b>双相情感障碍</b>为切入点。玩家可以沉浸式地体验当时发生的一切，并与场景中的物品互动以获取线索。</p>
+        <p style="margin-top:14px">我想通过这个项目呼吁大家<b>平等对待精神疾病患者</b>——我们眼中所谓的「异常」，或许正是他们内心的美。</p>
+        <div class="p-meta">
+          <span>虚拟现实游戏</span>
+          <span>游戏叙事</span>
+          <span>Unreal Engine 5</span>
+          <span>主创 · VR 交互 &amp; 环境声音设计</span>
+        </div>
+        <div style="margin-top:28px">
+          <a class="videolink" href="#p2t">
+            <span class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+            观看实机演示
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3 class="sec-t reveal">双重视角叙事</h3>
+      <div class="duo">
+        <div class="duo-card reveal">
+          <img src="https://aka.doubaocdn.com/s/KCr374B8O4" alt="Elisa 视角——层级化的空间叙事">
+          <div class="txt">
+            <div class="k">ELISA'S VIEW · 患者的内心</div>
+            <h4>Elisa Lam 的视角</h4>
+            <p>走廊里充满了重复的房间，暗示着患者被困在自己的内心世界中，无法脱身。情绪容易波动，幻觉也时有出现——用空间本身讲述精神困境。</p>
+          </div>
+        </div>
+        <div class="duo-card red reveal d1">
+          <img src="https://aka.doubaocdn.com/s/Kk0lzAnJBJ" alt="旁观者视角——建筑拆解分析">
+          <div class="txt">
+            <div class="k">OUTSIDER'S VIEW · 世界的旁观</div>
+            <h4>旁观者视角</h4>
+            <p>玩家戴上 VR 眼镜后，可以自由查看视角，观看电梯外的场景。旁观者与亲历者，在同一空间里看见完全不同的世界。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3 class="sec-t reveal">UE5 场景与交互编程</h3>
+      <div class="gallery">
+        <figure class="g reveal">
+          <img src="https://aka.doubaocdn.com/s/NPFw4jhMMJ" alt="UE 编辑器 jiudian6 场景">
+          <figcaption>体积碰撞会熄灭所有点光源，营造令人不安的氛围</figcaption>
+        </figure>
+        <figure class="g reveal d1">
+          <img src="https://aka.doubaocdn.com/s/V4OUwumD2l" alt="UE 编辑器 jiudian3 室内场景">
+          <figcaption>室内空间布光与物品质感调试</figcaption>
+        </figure>
+        <figure class="g reveal d2">
+          <img src="https://aka.doubaocdn.com/s/CWAvmUNZpr" alt="UE 编辑器 jiudian2 走廊场景">
+          <figcaption>重复的走廊——被困的内心世界</figcaption>
+        </figure>
+      </div>
+      <div class="gallery" style="margin-top:16px">
+        <figure class="g reveal">
+          <img src="https://aka.doubaocdn.com/s/zXycK35awp" alt="UE 编辑器 jiudian4 管道场景">
+          <figcaption>玩家进入电闸时，自动播放视频</figcaption>
+        </figure>
+        <figure class="g reveal d1">
+          <img src="https://aka.doubaocdn.com/s/qOPZ2w2G7u" alt="UE 编辑器 jiudian5 冷蓝浴室">
+          <figcaption>冷色光环境下的悬念营造</figcaption>
+        </figure>
+        <figure class="g reveal d2">
+          <img src="https://aka.doubaocdn.com/s/mwTraxmiCy" alt="UE 编辑器 jiudian5 浴室隔断">
+          <figcaption>可交互按钮：闪烁的圆圈，点击播放对话补充背景故事</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3 class="sec-t reveal">叙事内核</h3>
+      <div class="quote reveal">
+        我们眼中所谓的「异常」，或许正是他们内心的美。重复的房间、熄灭的灯光、闪烁的按钮——每一个设计都在让玩家理解：精神疾病患者被困在怎样的世界里。
+        <small>EMPATHY BY DESIGN — 用 VR 建立对精神疾病患者的同理心</small>
+      </div>
+    </div>
+    <div class="block" id="p2t">
+      <h3 class="sec-t reveal">实机演示</h3>
+      <div class="vplayer reveal">
+        <video controls preload="metadata" poster="https://aka.doubaocdn.com/s/nX1fRF42Bu">
+          <source src="https://aka.doubaocdn.com/s/segwYPysc2" type="video/mp4">
+          您的浏览器不支持视频播放。
+        </video>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 项目 03：回声步伐 ============ -->
+<section class="project section" id="p3">
+  <div class="wrap">
+    <div class="p-head">
+      <div class="imgbox reveal">
+        <img src="https://aka.doubaocdn.com/s/DjUE7uOWUL" alt="回声步伐——发光灯管装置">
+      </div>
+      <div class="reveal d1">
+        <p class="p-no">PROJECT 03 · 个人项目</p>
+        <h2>回声步伐</h2>
+        <div class="en2">ECHO STEPS</div>
+        <p>一款<b>夜间跑步辅助互动装置</b>。在有氧运动的前 15 分钟，跑者常常因过度疲劳而放弃后续的长距离跑步。通过观察自然环境中真实的场景，借助测试与反复实验，我完成了一项灯光设计实验——研究发现，当夜跑者感到疲惫时，他们<b>调节呼吸频率的能力会更好</b>。</p>
+        <div class="p-meta">
+          <span>交互装置</span>
+          <span>灯光设计</span>
+          <span>超声波传感</span>
+          <span>呼吸节奏引导</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3 class="sec-t reveal">研究背景 —— 夜间跑步正变得越来越流行</h3>
+      <p class="lead reveal" style="margin-bottom:30px">越来越多的人白天时间被严重压缩。对于想锻炼的人来说，只能选择早上或晚上外出运动——而大多数人选择在一天结束时、晚上去跑步。</p>
+      <div class="stats" style="margin-bottom:30px">
+        <div class="stat reveal">
+          <div class="num">84%</div>
+          <div class="lbl">喜欢晚上跑步</div>
+          <div class="sub">VS 喜欢白天跑步</div>
+        </div>
+        <div class="stat reveal d1">
+          <div class="num">68%</div>
+          <div class="lbl">习惯独自跑步</div>
+          <div class="sub">VS 结伴跑步</div>
+        </div>
+        <div class="stat reveal d2">
+          <div class="num">↑↑</div>
+          <div class="lbl">户外跑步逐年上升</div>
+          <div class="sub">2019 → 2024 持续增长，2024 反超室内</div>
+        </div>
+      </div>
+      <div class="bars reveal" id="runBars">
+        <div class="bar"><div class="pill in start-0" data-h="14"><b>2019</b></div><span class="y">2019</span></div>
+        <div class="bar"><div class="pill in" data-h="20"><b>2020</b></div><span class="y">2020</span></div>
+        <div class="bar"><div class="pill in" data-h="26"><b>2021</b></div><span class="y">2021</span></div>
+        <div class="bar"><div class="pill in" data-h="32"><b>2022</b></div><span class="y">2022</span></div>
+        <div class="bar"><div class="pill in" data-h="38"><b>2023</b></div><span class="y">2023</span></div>
+        <div class="bar"><div class="pill in" data-h="44"><b>2024</b></div><span class="y">2024</span></div>
+        <div class="bar"><div class="pill out start-0" data-h="18"><b>2019</b></div><span class="y">2019</span></div>
+        <div class="bar"><div class="pill out" data-h="26"><b>2020</b></div><span class="y">2020</span></div>
+        <div class="bar"><div class="pill out" data-h="36"><b>2021</b></div><span class="y">2021</span></div>
+        <div class="bar"><div class="pill out" data-h="48"><b>2022</b></div><span class="y">2022</span></div>
+        <div class="bar"><div class="pill out" data-h="60"><b>2023</b></div><span class="y">2023</span></div>
+        <div class="bar"><div class="pill out" data-h="76"><b>2024</b></div><span class="y">2024</span></div>
+      </div>
+      <div class="legend">
+        <span><i class="lo"></i>户外跑步</span>
+        <span><i class="li"></i>室内跑步</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3 class="sec-t reveal">设计原理 —— 「极点」与「第二次呼吸」</h3>
+      <p class="reveal" style="color:var(--ink-dim);font-size:15px;max-width:760px">
+        在长距离有氧运动中，跑到一半时我们会感到呼吸困难、肌肉无力——这是生理上的「极点」，让人想要放弃。但坚持继续奔跑，经过一段距离后，动作会变得轻松有力、呼吸顺畅——这就是「第二次呼吸」，一些学者称之为<b style="color:var(--ink)">「跑步者的巅峰」</b>。
+      </p>
+      <div class="persp" style="margin-top:26px">
+        <div class="persp-card reveal">
+          <div class="idx">BREATH 2:1</div>
+          <h4>正确的呼吸节奏</h4>
+          <p>跑步者的呼吸与步幅通常为 2:1，但至少还有其他五种比例可用于不同情境：4:1、5:2、3:1、3:2、1:1。马拉松跑者常采用 3:1 或 5:2，初学者则总采用 1:1。</p>
+        </div>
+        <div class="persp-card reveal d1">
+          <div class="idx">LIGHT</div>
+          <h4>视觉刺激</h4>
+          <p>视觉是人类最重要的感官之一，主要由光刺激人眼产生。光具有特定频率与波长的电磁辐射——在广袤的电磁辐射中，可见光只是狭小的一段。</p>
+        </div>
+        <div class="persp-card reveal d2">
+          <div class="idx">SHADER</div>
+          <h4>灯光效果模拟</h4>
+          <p>使用片段着色器组件生成动态视觉效果，模拟灯光的「呼吸闪烁」——动态 Y 轴偏移量根据时间及回路索引生成，利用余弦函数确保周期性。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3 class="sec-t reveal">产出结果 —— 会「呼吸」的路灯</h3>
+      <div class="gallery two">
+        <figure class="g reveal">
+          <img src="https://aka.doubaocdn.com/s/k7gmK5hl8m" alt="人与灯管装置互动">
+          <figcaption>超声波检测到人们经过路灯时的移动，反馈给路灯，使其以特定频率开始闪烁</figcaption>
+        </figure>
+        <figure class="g reveal d1">
+          <img src="https://aka.doubaocdn.com/s/DjUE7uOWUL" alt="灯管装置点亮效果">
+          <figcaption>当跑者看到周围的灯光，大脑会受到刺激、提高兴奋水平；特定频率闪烁的光线引导跑者注意呼吸节奏</figcaption>
+        </figure>
+      </div>
+      <div class="rings">
+        <div class="ring reveal">
+          <svg viewBox="0 0 100 100">
+            <circle class="track" cx="50" cy="50" r="42"></circle>
+            <circle class="fill" cx="50" cy="50" r="42" stroke-dasharray="263.9" stroke-dashoffset="263.9" data-p="58"></circle>
+          </svg>
+          <div class="val">58%</div>
+          <div class="lbl">样本占比</div>
+        </div>
+        <div class="ring reveal d1">
+          <svg viewBox="0 0 100 100">
+            <circle class="track" cx="50" cy="50" r="42"></circle>
+            <circle class="fill" cx="50" cy="50" r="42" stroke-dasharray="263.9" stroke-dashoffset="263.9" data-p="63"></circle>
+          </svg>
+          <div class="val">63%</div>
+          <div class="lbl">调研数据</div>
+        </div>
+        <div class="ring reveal d2">
+          <svg viewBox="0 0 100 100">
+            <circle class="track" cx="50" cy="50" r="42"></circle>
+            <circle class="fill" cx="50" cy="50" r="42" stroke-dasharray="263.9" stroke-dashoffset="263.9" data-p="73"></circle>
+          </svg>
+          <div class="val">73%</div>
+          <div class="lbl">呼吸调节</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ Footer ============ -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div class="reveal">
+        <p class="eyebrow">03 · Contact</p>
+        <h2>让我们一起<br>创作<em>有回声的作品</em></h2>
+        <p class="lead">正在寻找影音交互 / 沉浸式体验 / 游戏 UI 方向的实习与全职机会。</p>
+        <div class="contact-links">
+          <a href="mailto:2097263105@qq.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            2097263105@qq.com
+          </a>
+          <a href="tel:1535025211">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8.1 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.6 2z"/></svg>
+            1535025211
+          </a>
+        </div>
+      </div>
+      <div class="skills-panel reveal d1">
+        <div class="sk"><span>TouchDesigner</span><div class="track"><div class="fill" data-w="92"></div></div><b>92%</b></div>
+        <div class="sk"><span>Figma</span><div class="track"><div class="fill" data-w="90"></div></div><b>90%</b></div>
+        <div class="sk"><span>Pro Tools</span><div class="track"><div class="fill" data-w="86"></div></div><b>86%</b></div>
+        <div class="sk"><span>Unreal Engine</span><div class="track"><div class="fill" data-w="78"></div></div><b>78%</b></div>
+        <div class="sk"><span>Photoshop</span><div class="track"><div class="fill" data-w="84"></div></div><b>84%</b></div>
+      </div>
+    </div>
+    <div class="copy">
+      <span>© 2026 ZHANG CHENGYANG · 影音交互设计作品集</span>
+      <span>PORTFOLIO — 声音 / 影像 / 空间 / 交互</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ 灯箱 ============ -->
+<div id="lightbox">
+  <button class="close" aria-label="关闭">×</button>
+  <img alt="作品大图">
+  <div class="cap"></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- 导航滚动状态与进度条 ---------- */
+var nav = document.getElementById('topnav');
+var progress = document.getElementById('progress');
+var navList = document.getElementById('navList');
+var menuBtn = document.getElementById('menuBtn');
+var links = navList.querySelectorAll('a');
+
+function onScroll(){
+  var y = window.scrollY || document.documentElement.scrollTop;
+  nav.classList.toggle('scrolled', y > 40);
+  var h = document.documentElement.scrollHeight - window.innerHeight;
+  progress.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
+  // 高亮当前章节
+  var cur = 'hero';
+  for(var i = 0; i < links.length; i++){
+    var el = document.querySelector(links[i].getAttribute('href'));
+    if(el && el.offsetTop <= y + 120) cur = links[i].getAttribute('data-nav');
+  }
+  for(var j = 0; j < links.length; j++){
+    links[j].classList.toggle('active', links[j].getAttribute('data-nav') === cur);
+  }
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+window.addEventListener('resize', onScroll, {passive:true});
+onScroll();
+
+menuBtn.addEventListener('click', function(){
+  navList.classList.toggle('open');
+});
+navList.addEventListener('click', function(e){
+  if(e.target.tagName === 'A') navList.classList.remove('open');
+});
+
+/* ---------- 滚动显现 ---------- */
+var revealEls = document.querySelectorAll('.reveal');
+var io = new IntersectionObserver(function(entries){
+  entries.forEach(function(en){
+    if(en.isIntersecting){
+      en.target.classList.add('in');
+      io.unobserve(en.target);
+    }
+  });
+}, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+revealEls.forEach(function(el){ io.observe(el); });
+
+/* ---------- 柱状图动画 ---------- */
+var barsDone = false;
+var barsIO = new IntersectionObserver(function(entries){
+  entries.forEach(function(en){
+    if(en.isIntersecting && !barsDone){
+      barsDone = true;
+      var pills = document.querySelectorAll('#runBars .pill');
+      pills.forEach(function(p){
+        var h = p.getAttribute('data-h');
+        p.style.height = h + '%';
+      });
+      barsIO.disconnect();
+    }
+  });
+}, {threshold:.4});
+barsIO.observe(document.getElementById('runBars'));
+
+/* ---------- 环形图动画 ---------- */
+var ringDone = false;
+var ringIO = new IntersectionObserver(function(entries){
+  entries.forEach(function(en){
+    if(en.isIntersecting && !ringDone){
+      ringDone = true;
+      document.querySelectorAll('.ring .fill').forEach(function(c){
+        var p = parseFloat(c.getAttribute('data-p'));
+        var off = 263.9 * (1 - p / 100);
+        c.style.strokeDashoffset = off;
+      });
+      ringIO.disconnect();
+    }
+  });
+}, {threshold:.4});
+ringIO.observe(document.querySelector('.rings'));
+
+/* ---------- 技能条动画 ---------- */
+var skDone = false;
+var skIO = new IntersectionObserver(function(entries){
+  entries.forEach(function(en){
+    if(en.isIntersecting && !skDone){
+      skDone = true;
+      document.querySelectorAll('.skills-panel .fill').forEach(function(f){
+        f.style.width = f.getAttribute('data-w') + '%';
+      });
+      skIO.disconnect();
+    }
+  });
+}, {threshold:.3});
+skIO.observe(document.querySelector('.skills-panel'));
+
+/* ---------- 灯箱 ---------- */
+var lightbox = document.getElementById('lightbox');
+var lbImg = lightbox.querySelector('img');
+var lbCap = lightbox.querySelector('.cap');
+document.querySelectorAll('.gallery .g img, .media-grid .g2 img').forEach(function(img){
+  img.addEventListener('click', function(e){
+    e.stopPropagation();
+    lbImg.src = img.currentSrc || img.src;
+    var cap = img.closest('.g, .g2').querySelector('figcaption');
+    lbCap.textContent = cap ? cap.textContent : '';
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+});
+lightbox.addEventListener('click', function(){
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+});
+lightbox.querySelector('.close').addEventListener('click', function(e){
+  e.stopPropagation();
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+});
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape'){ lightbox.classList.remove('open'); document.body.style.overflow = ''; }
+});
+
+/* ---------- 粒子烟花 Canvas ---------- */
+var canvas = document.getElementById('fx');
+var ctx = canvas.getContext('2d');
+var W, H, DPR;
+var particles = [];
+var rockets = [];
+var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function resize(){
+  DPR = Math.min(window.devicePixelRatio || 1, 2);
+  W = canvas.clientWidth; H = canvas.clientHeight;
+  canvas.width = W * DPR; canvas.height = H * DPR;
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+}
+window.addEventListener('resize', resize);
+resize();
+
+function rand(a, b){ return a + Math.random() * (b - a); }
+
+function Particle(x, y, vx, vy, hue, life){
+  this.x = x; this.y = y; this.vx = vx; this.vy = vy;
+  this.hue = hue; this.life = life; this.max = life;
+  this.decay = rand(.8, 1.4);
+}
+
+function burst(x, y){
+  var hue = Math.random() < .62 ? 158 : (Math.random() < .5 ? 160 : 46);
+  var n = reduceMotion ? 18 : Math.floor(rand(46, 78));
+  for(var i = 0; i < n; i++){
+    var a = rand(0, Math.PI * 2);
+    var sp = rand(.6, 4.2);
+    var p = new Particle(x, y, Math.cos(a) * sp, Math.sin(a) * sp, hue, rand(46, 110));
+    particles.push(p);
+  }
+  // 微光晕
+  for(var k = 0; k < 6; k++){
+    var a2 = rand(0, Math.PI * 2);
+    var sp2 = rand(.2, .9);
+    particles.push(new Particle(x, y, Math.cos(a2) * sp2, Math.sin(a2) * sp2, hue, rand(20, 40)));
+  }
+}
+
+function launchRocket(){
+  if(reduceMotion) return;
+  rockets.push({
+    x: rand(W * .12, W * .88),
+    y: H + rand(10, 40),
+    vx: rand(-.5, .5),
+    vy: rand(-6.2, -8.2),
+    targetY: rand(H * .14, H * .42)
+  });
+}
+
+var lastLaunch = 0;
+function tick(t){
+  requestAnimationFrame(tick);
+  if(t - lastLaunch > rand(1100, 2000)){ launchRocket(); lastLaunch = t; }
+
+  ctx.clearRect(0, 0, W, H);
+  ctx.globalCompositeOperation = 'lighter';
+
+  // 火箭上升
+  for(var i = rockets.length - 1; i >= 0; i--){
+    var r = rockets[i];
+    r.x += r.vx; r.y += r.vy; r.vy += .12;
+    // 尾迹
+    ctx.beginPath();
+    ctx.arc(r.x, r.y, 1.6, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(150,240,215,.7)';
+    ctx.fill();
+    if(r.vy > -0.4 || r.y < r.targetY){
+      burst(r.x, r.y);
+      rockets.splice(i, 1);
+    }
+  }
+
+  // 粒子
+  for(var j = particles.length - 1; j >= 0; j--){
+    var p = particles[j];
+    p.x += p.vx; p.y += p.vy;
+    p.vy += .045;
+    p.vx *= .985;
+    p.life -= p.decay;
+    if(p.life <= 0){ particles.splice(j, 1); continue; }
+    var a = Math.max(p.life / p.max, 0);
+    var tw = .55 + .45 * Math.sin(t / 180 + p.x * .05);
+    var alpha = a * tw;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.life > 30 ? 1.8 : 1.1, 0, Math.PI * 2);
+    ctx.fillStyle = 'hsla(' + p.hue + ',95%,' + (p.hue === 46 ? '68%' : '72%') + ',' + alpha.toFixed(3) + ')';
+    ctx.fill();
+  }
+  ctx.globalCompositeOperation = 'source-over';
+}
+requestAnimationFrame(tick);
+
+})();
+
+/* 代表作品横向滑动 */
+(function(){
+  var rail = document.getElementById('works');
+  if(!rail) return;
+  var grid = rail.querySelector('.grid');
+  var prev = rail.querySelector('.ws-prev');
+  var next = rail.querySelector('.ws-next');
+  function step(dir){
+    var stepW = Math.min(grid.clientWidth * 0.85, 460);
+    grid.scrollBy({left: dir * stepW, behavior:'smooth'});
+  }
+  if(prev) prev.addEventListener('click', function(){ step(-1); });
+  if(next) next.addEventListener('click', function(){ step(1); });
+  grid.addEventListener('wheel', function(e){
+    if(Math.abs(e.deltaY) > Math.abs(e.deltaX)){
+      e.preventDefault();
+      grid.scrollLeft += e.deltaY;
+    }
+  }, {passive:false});
+})();
+</script>
+</body>
+</html>
