@@ -672,6 +672,34 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;background:var(--bg-
 .ws-prev{left:-20px}
 .ws-next{right:-20px}
 @media (max-width:900px){.ws-btn{display:none}}
+
+/* MFA：制作过程视频。样式仅作用于新增区域。 */
+#mfa-production{scroll-margin-top:100px;margin-top:72px}
+#mfa-production .mfa-intro{max-width:700px;color:var(--ink-dim);font-size:15px;margin-bottom:30px}
+#mfa-production .mfa-label{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--green);margin-bottom:10px}
+#mfa-production .mfa-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+#mfa-production .mfa-card{min-width:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--bg-2)}
+#mfa-production .mfa-media{aspect-ratio:16/9;position:relative;background:var(--bg)}
+#mfa-production .mfa-media video{display:block;width:100%;height:100%;object-fit:contain;background:#000}
+#mfa-production [hidden]{display:none!important}
+#mfa-production .mfa-empty{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;padding:24px;text-align:center;background:radial-gradient(ellipse at 50% 100%,rgba(61,240,198,.08),transparent 70%)}
+#mfa-production .mfa-empty svg{width:34px;height:34px;color:var(--green);opacity:.65}
+#mfa-production .mfa-empty span{font-size:13px;color:var(--ink-dim);letter-spacing:.08em}
+#mfa-production .mfa-caption{padding:22px}
+#mfa-production h4{font-family:var(--serif);font-size:19px;font-weight:700;margin-bottom:8px}
+#mfa-production .mfa-caption p{font-size:13px;color:var(--ink-dim);line-height:1.8}
+#mfa-production .mfa-status{display:inline-block;margin-top:16px;font-size:11px;color:var(--ink-dim);border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+#mfa-production .mfa-tools{margin-top:24px;display:grid;grid-template-columns:minmax(0,1.8fr) minmax(0,1fr);align-items:center}
+#mfa-production .mfa-tools .mfa-caption{padding:30px}
+#mfa-production .mfa-footnote{font-size:12px;color:var(--ink-dim);margin-top:18px}
+#mfa-production video:focus-visible{outline:2px solid var(--green);outline-offset:-3px}
+@media(max-width:960px){#mfa-production .mfa-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#mfa-production .mfa-tools{grid-template-columns:1fr}}
+@media(max-width:600px){#mfa-production{margin-top:48px}#mfa-production .mfa-grid{grid-template-columns:1fr}#mfa-production .mfa-tools .mfa-caption{padding:22px}}
+/* 首页三个入口：默认深色，悬停或键盘聚焦时绿色高亮 */
+.hero-cta .btn{background:transparent;color:var(--ink);border-color:var(--line);font-weight:400;box-shadow:none;transform:none}
+@media(hover:hover){.hero-cta .btn:hover{background:var(--green);color:#071009;border-color:var(--green);box-shadow:0 0 24px var(--green-glow);transform:translateY(-2px)}}
+.hero-cta .btn:focus-visible{background:var(--green);color:#071009;border-color:var(--green);outline:2px solid var(--green);outline-offset:4px}
+@media(prefers-reduced-motion:reduce){.hero-cta .btn{transition:none}.hero-cta .btn:hover{transform:none}}
 </style>
 </head>
 <body>
@@ -718,6 +746,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;background:var(--bg-
       <a class="btn btn-primary" href="#works">浏览项目
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
+      <a class="btn btn-ghost" href="videos.html">查看所有视频 →</a>
       <a class="btn btn-ghost" href="#contact">联系我</a>
     </div>
   </div>
@@ -1064,6 +1093,67 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;background:var(--bg-
         </video>
       </div>
     </div>
+
+    <!-- MFA 视频维护：在下面三个 video 的 data-src 中填入 MP4 直链或相对路径。
+         不要填视频分享页面地址。修改相应标题、简介，可添加 poster 封面。
+         可复制或删除单个 figure 增减作品；复制时请保持标题 id 和 aria-labelledby 唯一。
+         有对白的视频可在 video 内添加 track 字幕文件。现有实机演示保持独立。 -->
+    <section class="block" id="mfa-production" aria-labelledby="mfa-production-title">
+      <p class="mfa-label">PROCESS / MOVING IMAGE & SOUND</p>
+      <h3 class="sec-t" id="mfa-production-title">影像作品与声音制作</h3>
+      <p class="mfa-intro">硕士期间的影像创作、音频重制与剪辑音效作品。</p>
+      <div class="mfa-grid">
+        <figure class="mfa-card">
+          <div class="mfa-media">
+            <!-- 填写 data-src 后自动启用播放器；可另加 poster="封面图片链接"。留空不会请求视频。 -->
+            <video hidden controls playsinline preload="none" data-src="https://pub-3f420c38e43244bd905026368e04f735.r2.dev/glasgow-rain.mp4" poster="glasgow-rain.jpg" aria-labelledby="mfa-film-1-title">
+              您的浏览器不支持视频播放。
+            </video>
+            <div class="mfa-empty"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><rect x="4" y="7" width="24" height="18" rx="3"/><path d="M10 13v6m4-9v12m4-10v8m4-7v6"/></svg><span>作品视频待补充</span></div>
+          </div>
+          <figcaption class="mfa-caption">
+            <div class="mfa-label">01 / FILM 01</div>
+            <h4 id="mfa-film-1-title">雨夜的格拉斯哥</h4>
+            <!-- 替换成真实作品名称与简述，可补充本人职责、制作年份和时长。 -->
+            <p>以格拉斯哥的雨夜为主题，记录雨、光与街道。</p><p style="margin-top:10px">02:59 · 影像创作</p>
+            <span class="mfa-status">待补充</span>
+          </figcaption>
+        </figure>
+        <figure class="mfa-card">
+          <div class="mfa-media">
+            <!-- 填写 data-src 后自动启用播放器；可另加 poster="封面图片链接"。留空不会请求视频。 -->
+            <video hidden controls playsinline preload="none" data-src="https://pub-3f420c38e43244bd905026368e04f735.r2.dev/jaws-of-life.mp4" poster="jaws-of-life.jpg" aria-labelledby="mfa-film-2-title">
+              您的浏览器不支持视频播放。
+            </video>
+            <div class="mfa-empty"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><rect x="4" y="7" width="24" height="18" rx="3"/><path d="M10 13v6m4-9v12m4-10v8m4-7v6"/></svg><span>作品视频待补充</span></div>
+          </div>
+          <figcaption class="mfa-caption">
+            <div class="mfa-label">01 / FILM 02</div>
+            <h4 id="mfa-film-2-title">JAWS OF LIFE · 音频重制</h4>
+            <!-- 替换成真实作品名称与简述，可补充本人职责、制作年份和时长。 -->
+            <p>针对 JAWS OF LIFE 原片重新制作音频，呈现声音与画面的配合。</p><p style="margin-top:10px">06:46 · 音频重制</p>
+            <span class="mfa-status">待补充</span>
+          </figcaption>
+        </figure>
+        <figure class="mfa-card">
+          <div class="mfa-media">
+            <!-- 填写 data-src 后自动启用播放器；可另加 poster="封面图片链接"。留空不会请求视频。 -->
+            <video hidden controls playsinline preload="none" data-src="https://pub-3f420c38e43244bd905026368e04f735.r2.dev/meshes-of-the-afternoon.mp4" poster="meshes-of-the-afternoon.jpg" aria-labelledby="mfa-film-3-title">
+              您的浏览器不支持视频播放。
+            </video>
+            <div class="mfa-empty"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><rect x="4" y="7" width="24" height="18" rx="3"/><path d="M10 13v6m4-9v12m4-10v8m4-7v6"/></svg><span>作品视频待补充</span></div>
+          </div>
+          <figcaption class="mfa-caption">
+            <div class="mfa-label">01 / FILM 03</div>
+            <h4 id="mfa-film-3-title">Meshes of the Afternoon · 剪辑与音效</h4>
+            <!-- 替换成真实作品名称与简述，可补充本人职责、制作年份和时长。 -->
+            <p>基于 Meshes of the Afternoon 进行视频剪辑与音效制作。</p><p style="margin-top:10px">05:54 · 视频剪辑 / 音效制作</p>
+            <span class="mfa-status">待补充</span>
+          </figcaption>
+        </figure>
+      </div>
+      <p class="mfa-footnote">声音是作品的一部分，观看时建议佩戴耳机。</p>
+    </section>
   </div>
 </section>
 
@@ -1711,5 +1801,33 @@ requestAnimationFrame(tick);
   }, {passive:false});
 })();
 </script>
+<script>
+/* MFA 新增视频：空源显示占位，有源时启用原生播放器，不自动播放。 */
+(function(){
+  var region = document.getElementById('mfa-production');
+  var videos = region.querySelectorAll('video[data-src]');
+  videos.forEach(function(video){
+    var src = video.getAttribute('data-src').trim();
+    if(!src) return;
+    var card = video.closest('figure');
+    var placeholder = card.querySelector('.mfa-empty');
+    var status = card.querySelector('.mfa-status');
+    video.addEventListener('error', function(){
+      status.textContent = '暂时无法播放，请稍后重试';
+    });
+    video.addEventListener('loadedmetadata', function(){ status.textContent = '可播放'; });
+    video.addEventListener('play', function(){
+      videos.forEach(function(other){ if(other !== video) other.pause(); });
+    });
+    video.src = src;
+    video.hidden = false;
+    placeholder.hidden = true;
+    status.textContent = '点击播放';
+  });
+})();
+</script>
 </body>
 </html>
+
+
+
