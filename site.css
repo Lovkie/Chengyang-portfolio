@@ -12,3 +12,9 @@
 .home-intro{padding-top:34px;padding-bottom:34px}.home-intro h1{font-size:clamp(28px,2.8vw,42px)}.home-intro .overline{margin-bottom:12px}.project-cover:first-child{height:calc(100svh - 280px);min-height:530px;max-height:900px}.case-content #fps-talent>.wrap>.eyebrow:first-child,.case-content #fps-title{display:none}
 @media(max-width:760px){.home-intro{padding-top:26px;padding-bottom:26px}.home-intro h1{font-size:28px}.intro-aside{margin-top:18px}.intro-aside a{display:none}.project-cover:first-child{height:calc(100svh - 280px);min-height:440px}.cover-bottom h2{font-size:30px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
+.project-back-top{position:fixed;top:50%;right:16px;transform:translateY(-50%);z-index:25;pointer-events:auto;border:1px solid #a4afa5;border-radius:30px;background:#fafaf7ed;color:#465047;padding:8px 14px;font:11px Arial,"Microsoft YaHei",sans-serif;min-height:44px;cursor:pointer}
+.project-back-top[hidden],body:has(dialog[open]) .project-back-top{display:none}
+.project-back-top:focus-visible{outline:2px solid #465047;outline-offset:4px}
+@media(max-width:760px){.project-back-top{right:10px;font-size:10px}}
+.project-back-top{right:clamp(24px,8.4vw,160px);width:44px;height:44px;min-height:44px;padding:0;display:grid;place-items:center;border-radius:50%}
+@media(max-width:760px){.project-back-top{right:16px}}
